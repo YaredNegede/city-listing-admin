@@ -72,11 +72,11 @@
           "configurations": {
             "production": {
               "browserTarget": "CitiesListingService-admin:build:production",
-              "proxyConfig": "src/proxy.conf.json"
+              "proxyConfig": "proxy.conf.json"
             },
             "development": {
               "browserTarget": "CitiesListingService-admin:build:development",
-              "proxyConfig": "src/proxy.conf.json"
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

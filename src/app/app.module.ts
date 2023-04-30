@@ -11,7 +11,8 @@ import { CitiesComponent } from './cities/cities.component';
 import { PhotosComponent } from './photos/photos.component';
 import { AuthService } from './_services/auth.service';
 import { TokenStorageService } from './_services/token-storage.service';
-import { UserService } from './_services/user.service';
+import { CityService } from './_services/cities.service';
+import { CityPhotoService } from './_services/cities.photos.service';
 import { PhotoComponent } from './photo/photo.component';
 
 @NgModule({
@@ -30,7 +31,14 @@ import { PhotoComponent } from './photo/photo.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthService, TokenStorageService, UserService],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthService,
+    TokenStorageService,
+    CityService,
+    CityPhotoService
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

@@ -24,7 +24,7 @@
         #firstName="ngModel"
       />
       <div class="alert-danger" *ngIf="firstName.errors && f.submitted">
-        <div *ngIf="firstName.errors['required']">Email is required</div>
+        <div *ngIf="firstName.errors['required']">First name is required</div>
         <div *ngIf="firstName.errors['firstName']">
           firstName must be a valid firstName
         </div>
@@ -36,16 +36,16 @@
       <input
         type="text"
         class="form-control"
-        name="lastname"
-        [(ngModel)]="form.lastname"
+        name="lastName"
+        [(ngModel)]="form.lastName"
         required
-        lastname
-        #lastname="ngModel"
+        lastName
+        #lastName="ngModel"
       />
-      <div class="alert-danger" *ngIf="lastname.errors && f.submitted">
-        <div *ngIf="lastname.errors['required']">Email is required</div>
-        <div *ngIf="lastname.errors['lastname']">
-          lastname must be a valid lastname
+      <div class="alert-danger" *ngIf="lastName.errors && f.submitted">
+        <div *ngIf="lastName.errors['required']">Last name is required</div>
+        <div *ngIf="lastName.errors['lastName']">
+          lastname must be a valid lastName
         </div>
       </div>
     </div>
