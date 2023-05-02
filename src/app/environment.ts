@@ -1,4 +1,7 @@
+let home = "http://172.23.0.4"
+
 export default {
   production: false,
-  url: 'http://172.19.0.4:8080/v1/api'
+  root:home,
+  url: `${home}:8080/v1/api`
 };

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TokenStorageService } from './_services/token-storage.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-root',
@@ -19,13 +20,15 @@ export class AppComponent {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-      this.roles = user.roles;
+      const {access_token,refresh_token} = this.tokenStorageService.getUser();
+      const helper = new JwtHelperService();
 
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+      const {sub} = helper.decodeToken(access_token);
 
-      this.username = user.username;
+      if(sub){
+        this.showAdminBoard = true;
+        this.showModeratorBoard = true;
+        this.username = sub;}
     }
   }
 

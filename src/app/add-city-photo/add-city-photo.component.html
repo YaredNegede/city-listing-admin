@@ -1,0 +1,17 @@
+<div>
+  <form novalidate>
+    <p>Add city photo</p>
+    <input id="photoName" type="text" class="form-control" [(ngModel)]="photoName" name="cityName"  aria-describedby="inputGroup-sizing-sm">
+    <div class="form-group">
+      <label for="file">Choose File</label>
+      <input type="file" id="file" (change)="handleFileInput($event)">
+    </div>
+</form>
+
+  <div *ngFor = "let url of photoUrl">
+
+      <img src={{url}}  class="rounded float-left" style="width: 200px;height: 200px;"/>
+
+  </div>
+
+</div>
