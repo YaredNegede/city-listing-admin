@@ -1,17 +1,47 @@
-<div>
-  <form novalidate>
-    <p>Add city photo</p>
-    <input id="photoName" type="text" class="form-control" [(ngModel)]="photoName" name="cityName"  aria-describedby="inputGroup-sizing-sm">
-    <div class="form-group">
-      <label for="file">Choose File</label>
-      <input type="file" id="file" (change)="handleFileInput($event)">
+<div style="height: 100%;">
+    <form novalidate>
+      <p>Add city photo</p>
+
+      <div class="form-group">
+        <label for="file">Choose File</label>
+        <input type="file" id="file" (change)="handleFileInput($event)">
+      </div>
+  </form>
+
+    <div *ngFor = "let photo of photo; let indexOfelement=index;">
+
+      <div class="row">
+        <input id="photoName" type="text" class="col-10 form-control" [(ngModel)]="photo.photoName" name="photoName"  aria-describedby="inputGroup-sizing-sm">
+        <div class="col-2">
+          <div class="row">
+            <i class="col-6 bi bi-trash3-fill nav-link" (click)="delete($event)" id={{indexOfelement}}></i>
+            <i class="col-6 bi bi-check2 nav-link" (click)="save($event)" id={{indexOfelement}}></i>
+           </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+         <img src={{photo.photoUrl}}  class="rounded float-left" style="width: 200px;height: 200px;margin: 16px;"/>
+
     </div>
-</form>
 
-  <div *ngFor = "let url of photoUrl">
+    </div>
 
-      <img src={{url}}  class="rounded float-left" style="width: 200px;height: 200px;"/>
+    <div class="row text-center text-lg-start">
 
-  </div>
+      <div *ngFor="let city of cityPhotosResult?.content" class="col-4">
+        <div class="row" >
+          <img class="img-fluid img-thumbnail"  src={{city.photoUrl}} alt="">
+        </div>
+        <div class="row mt-1" >
+          <h3>{{city.photoName}}</h3>
+          <i class=" col-3 bi bi-pencil-square"  id={{city.photoName}}></i>
+          <i class=" col-3 bi bi-trash3-fill" (click)="delete($event)" id={{city.photoName}}></i>
+        </div>
+
+      </div>
+
+    </div>
 
 </div>

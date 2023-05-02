@@ -1,4 +1,4 @@
-let home = "http://172.23.0.4"
+let home = "http://172.24.0.5"
 
 export default {
   production: false,

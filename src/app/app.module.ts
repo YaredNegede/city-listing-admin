@@ -15,6 +15,7 @@ import { CityPhotoService } from './_services/cities.photos.service';
 import { PhotoComponent } from './photo/photo.component';
 import { AddCityPhotoComponent } from './add-city-photo/add-city-photo.component';
 import { AuthInterceptor } from './util/auth-intercepter';
+import { EditCityComponent } from './edit-city/edit-city.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AuthInterceptor } from './util/auth-intercepter';
     HomeComponent,
     PhotosComponent,
     PhotoComponent,
-    AddCityPhotoComponent
+    AddCityPhotoComponent,
+    EditCityComponent
   ],
   imports: [
     BrowserModule,

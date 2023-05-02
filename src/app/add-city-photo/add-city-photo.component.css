@@ -1,3 +1,9 @@
 .file-input {
   display: none;
 }
+ .sized{
+  width: 300px;
+  height: 300px;
+  margin: 16px;
+  padding: 16px;
+ }

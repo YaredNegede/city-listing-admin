@@ -22,8 +22,8 @@ export class CityService {
     return this.http.get<CitiesResult>(`${environment.url}/${imageUrl}`);
   }
 
-  addCityPhoto(photo: Photo): Observable<any> {
-    return this.http.post(`${environment.url}/photo/`, photo, { responseType: 'text' });
+  addCityPhoto(id: any,photo: Photo): Observable<any> {
+    return this.http.put(`${environment.url}/cities/${id}/photo`, photo, { responseType: 'text' });
   }
 
   uploadCityPhoto(photo: File, name:string): Observable<any> {
@@ -48,7 +48,13 @@ export class CityService {
   delete(id: number) {
     return this.http.delete(`${environment.url}/cities/${id}`, { responseType: 'text' });
   }
-  edit(id: number) {
-    return this.http.delete(`${environment.url}/cities/${id}`, { responseType: 'text' });
+
+  edit(city: City) {
+    return this.http.put(`${environment.url}/cities/${city.id}`, { responseType: 'text' });
   }
+
+  get(id: string) : Observable<any> {
+    return this.http.get<City>(`${environment.url}/cities/${id}`);
+  }
+
 }

@@ -1,35 +1,40 @@
-<div class="container">
-  <header class="jumbotron">
+    <div class="container">
+        <form  *ngIf="isLoggedIn">
+          <div class="input-group input-group-sm mb-3">
+            <input id="cityName" type="text" class="form-control" [(ngModel)]="cityName" name="cityName"  aria-describedby="inputGroup-sizing-sm">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">
+                <i class="bi bi-plus-square" (click)="addCity()"></i>
+              </span>
+            </div>
+          </div>
+        </form>
+      <div>
 
-  <form  *ngIf="isLoggedIn">
-    <div class="input-group input-group-sm mb-3">
-      <input id="cityName" type="text" class="form-control" [(ngModel)]="cityName" name="cityName"  aria-describedby="inputGroup-sizing-sm">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-sm">
-          <i class="bi bi-plus-square" (click)="addCity()"></i>
-        </span>
-      </div>
+     <div class="row">
+        <div class="wms-card-size card col-3" style="width: 18rem;"  *ngFor="let city of cities?.content" style="margin: 16px;">
+
+          <div class="card-body">
+
+            <a href="#" class="col-4 card-link card-title">
+              <i class="bi bi-trash3-fill nav-link" (click)="delete($event)" id={{city.id}}  *ngIf="isLoggedIn">
+              </i>
+            </a>
+
+            <h6 class="card-subtitle mb-2 text-muted">{{city.name}}</h6>
+
+            <p class="card-text">
+              {{city.name}}
+            </p>
+
+            <a href="#" class="col-4 card-link" routerLink="cities/{{city.id}}" *ngIf="isLoggedIn">
+              <i class="bi bi-pencil-square"  id={{city.id}}></i>
+            </a>
+
+          </div>
+
+        </div>
+     </div>
     </div>
-</form>
-</header>
-<app-add-city-photo></app-add-city-photo>
-  <table class="table">
-    <tr  *ngFor="let city of cities?.content">
-      <td>
-        {{city.id}}
-      </td>
-      <td>
-        {{city.name}}
-      </td>
-      <td>
-        <a href="photos/{{city.id}}" class="nav-link" routerLink="photos">
-          <i class="bi bi-pencil-square"  id={{city.id}}></i>
-        </a>
-      </td>
-      <td>
-        <i class="bi bi-trash3-fill nav-link" (click)="delete($event)" id={{city.id}}></i>
-      </td>
-    </tr>
-  </table>
 
 </div>

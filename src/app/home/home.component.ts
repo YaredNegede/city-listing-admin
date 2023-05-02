@@ -9,10 +9,13 @@ import { TokenStorageService } from '../_services/token-storage.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
   isLoggedIn = false;
   cities?: CitiesResult;
   cityName: string = ""
-  constructor(private userService: CityService,
+
+  constructor(
+    private userService: CityService,
     private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
@@ -54,6 +57,7 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+
   edit(event: any): void {
     this.userService.edit(event.target.id)
     .subscribe({
