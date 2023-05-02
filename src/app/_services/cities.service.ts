@@ -14,8 +14,20 @@ export class CityService {
 
   constructor(private http: HttpClient) { }
 
-  getPublicContent(): Observable<CitiesResult> {
+  getPublicContent(name?:string): Observable<CitiesResult> {
+    if(name){
+      return this.http.get<CitiesResult>(`${environment.url}/cities/public?name=${name}`);
+    }
+
+    else{
+      return this.http.get<CitiesResult>(`${environment.url}/cities/public`);
+    }
+
+  }
+
+  getAllPublicContent(): Observable<CitiesResult> {
     return this.http.get<CitiesResult>(`${environment.url}/cities/public`);
+
   }
 
   getPublicPhotoContent(imageUrl: string): Observable<CitiesResult> {

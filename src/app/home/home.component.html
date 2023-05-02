@@ -1,6 +1,9 @@
     <div class="container">
+
+      <div class="row">
+
         <form  *ngIf="isLoggedIn">
-          <div class="input-group input-group-sm mb-3">
+          <div class="input-group input-group-sm">
             <input id="cityName" type="text" class="form-control" [(ngModel)]="cityName" name="cityName"  aria-describedby="inputGroup-sizing-sm">
             <div class="input-group-prepend">
               <span class="input-group-text" id="inputGroup-sizing-sm">
@@ -9,10 +12,30 @@
             </div>
           </div>
         </form>
-      <div>
 
-     <div class="row">
-        <div class="wms-card-size card col-3" style="width: 18rem;"  *ngFor="let city of cities?.content" style="margin: 16px;">
+        <ng-autocomplete
+          [data]="data"
+          [searchKeyword]="keyword"
+          placeholder="Select country"
+          (selected)='selectEvent($event)'
+          (inputChanged)='onChangeSearch($event)'
+          (inputFocused)="onFocused($event)"
+          [itemTemplate]="itemTemplate"
+          [notFoundTemplate]="notFoundTemplate">
+        </ng-autocomplete>
+          <ng-template #itemTemplate let-item>
+          <a [innerHTML]="item.name" style="color: rgb(0, 0, 0);"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+          <div [innerHTML]="notFound"></div>
+        </ng-template>
+
+
+     <div class="row ">
+
+
+        <div class="wms-card-size card col-3 white " style="width: 18rem;"  *ngFor="let city of cities?.content" style="margin: 16px;">
 
           <div class="card-body">
 
@@ -35,6 +58,8 @@
 
         </div>
      </div>
+
+
     </div>
 
 </div>

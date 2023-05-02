@@ -6,7 +6,7 @@ import { Photo } from '../models/photo.model';
 import { ActivatedRoute } from '@angular/router';
 import { CityPhotoService } from '../_services/cities.photos.service';
 import { CitiesResult } from '../models/cities.model';
-import { PhotoResult } from '../models/photo.result.model';
+import { Content, PhotoResult } from '../models/photo.result.model';
 import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
@@ -15,6 +15,8 @@ import { TokenStorageService } from '../_services/token-storage.service';
   styleUrls: ['./add-city-photo.component.css']
 })
 export class AddCityPhotoComponent implements OnInit {
+  keyword = 'name';
+  data: Array<any> = [];
 
   isLoggedIn = false;
   cityPhotosResult?: PhotoResult
@@ -31,6 +33,17 @@ export class AddCityPhotoComponent implements OnInit {
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     this.loadCityPhoto()
+  }
+
+
+  selectEvent(val: Content) {
+  }
+
+  onChangeSearch(val: string) {
+  }
+
+  onFocused(e: any){
+    // do something when input is focused
   }
 
   handleFileInput(event:any) {
@@ -64,10 +77,25 @@ export class AddCityPhotoComponent implements OnInit {
 
   loadCityPhoto(){
     const cityId = this.route.snapshot.paramMap.get('id')
+    let id = 0;
     this.cityPhotoService.getPublicCityPhotoContent(cityId)
     .subscribe(res=>{
-      console.log(res)
       this.cityPhotosResult = res
+       this.cityPhotosResult.content.forEach(c=>{
+        this.data.push({id:id++,name:c.photoName})
+       })
+    })
+  }
+
+  loadOneCityPhoto(keyword:string){
+    const cityId = this.route.snapshot.paramMap.get('id')
+    let id = 0;
+    this.cityPhotoService.getPublicOneCityPhotoContent(cityId,keyword)
+    .subscribe(res=>{
+      this.cityPhotosResult = res
+       this.cityPhotosResult.content.forEach(c=>{
+        this.data.push({id:id++,name:c.photoName})
+       })
     })
   }
 

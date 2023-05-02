@@ -16,6 +16,7 @@ import { PhotoComponent } from './photo/photo.component';
 import { AddCityPhotoComponent } from './add-city-photo/add-city-photo.component';
 import { AuthInterceptor } from './util/auth-intercepter';
 import { EditCityComponent } from './edit-city/edit-city.component';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { EditCityComponent } from './edit-city/edit-city.component';
     FormsModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AutocompleteLibModule
   ],
   providers: [
     AuthService,

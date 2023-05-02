@@ -22,5 +22,7 @@ export class CityPhotoService {
   getPublicCityPhotoContent(imageId: any): Observable<PhotoResult> {
     return this.http.get<PhotoResult>(`${environment.url}/cities/public/${imageId}/city-photos`);
   }
-
+  getPublicOneCityPhotoContent(imageId: any, keyword:string): Observable<PhotoResult> {
+    return this.http.get<PhotoResult>(`${environment.url}/cities/public/${imageId}/city-photos`);
+  }
 }
