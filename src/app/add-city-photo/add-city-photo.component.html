@@ -58,10 +58,10 @@
       <nav aria-label="More" class="row"  style="padding-left: 100px;" *ngIf="cityPhotosResult">
         <ul class="pagination">
           <li class="page-item" >
-            <button class="page-link"  (click) = "prev()" *ngIf="cityPhotosResult.size">Prev</button>
+            <button class="page-link"  (click) = "prev($event)" *ngIf="cityPhotosResult.size">Prev</button>
           </li>
           <li class="page-item" >
-            <button class="page-link"  (click) = "next()"  *ngIf="cityPhotosResult.size">next</button>
+            <button class="page-link"  (click) = "next($event)"  *ngIf="cityPhotosResult.size">next</button>
           </li>
         </ul>
       </nav>

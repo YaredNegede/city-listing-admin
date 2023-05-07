@@ -23,6 +23,9 @@ export class AddCityPhotoComponent implements OnInit {
   photoName: string | null = null
   photo: Photo[] = []
 
+  currentPage = 0;
+  size = 10;
+
   constructor(
     private tokenStorageService: TokenStorageService,
     private route: ActivatedRoute,
@@ -76,14 +79,18 @@ export class AddCityPhotoComponent implements OnInit {
 
   loadCityPhoto(){
     const cityId = this.route.snapshot.paramMap.get('id')
-    let id = 0;
-    this.cityPhotoService.getPublicCityPhotoContent(cityId)
-    .subscribe(res=>{
-      this.cityPhotosResult = res
-       this.cityPhotosResult.content.forEach(c=>{
-        this.data.push({id:id++,name:c.photoName})
-       })
-    })
+    if(cityId){
+      let id = Number.parseInt(cityId)
+      if(cityId){
+        this.cityPhotoService.getPublicCityPhotoContent(id)
+        .subscribe(res=>{
+          this.cityPhotosResult = res
+           this.cityPhotosResult.content.forEach(c=>{
+            this.data.push({id:id++,name:c.photoName})
+           })
+        })
+      }
+    }
   }
 
   loadOneCityPhoto(keyword:string){
@@ -107,13 +114,36 @@ export class AddCityPhotoComponent implements OnInit {
     })
   }
 
-  next(){
-    console.log("next")
-
+  next(event:any){
+    const cityId = this.route.snapshot.paramMap.get('id')
+    if(cityId){
+      let id = Number.parseInt(cityId)
+      if(cityId){
+        this.cityPhotoService.getPublicCityPhotoContent(id, ++this.currentPage,this.size)
+        .subscribe(res=>{
+          this.cityPhotosResult = res
+           this.cityPhotosResult.content.forEach(c=>{
+            this.data.push({id:id++,name:c.photoName})
+           })
+        })
+      }
+    }
   }
 
-  prev(){
-    console.log("prev")
+  prev(event:any){
+    const cityId = this.route.snapshot.paramMap.get('id')
+    if(cityId){
+      let id = Number.parseInt(cityId)
+      if(cityId && this.currentPage>-1){
+        this.cityPhotoService.getPublicCityPhotoContent(id, --this.currentPage,this.size)
+        .subscribe(res=>{
+          this.cityPhotosResult = res
+           this.cityPhotosResult.content.forEach(c=>{
+            this.data.push({id:id++,name:c.photoName})
+           })
+        })
+      }
+    }
   }
 
 }

@@ -23,10 +23,10 @@ export class CityPhotoService {
     return this.http.delete(`${environment.url}/cities/${id}/photo`, { responseType: 'text' });
   }
 
-  getPublicCityPhotoContent(imageId: any): Observable<PhotoResult> {
-    return this.http.get<PhotoResult>(`${environment.url}/cities/public/${imageId}/city-photos`);
+  getPublicCityPhotoContent(cityId: number,currentPage: number=0,size: number=10): Observable<PhotoResult> {
+    return this.http.get<PhotoResult>(`${environment.url}/cities/public/${cityId}/city-photos?currentPage=${currentPage}&?size=${size}`);
   }
-  getPublicOneCityPhotoContent(imageId: any, keyword:string): Observable<PhotoResult> {
-    return this.http.get<PhotoResult>(`${environment.url}/cities/public/${imageId}/city-photos`);
+  getPublicOneCityPhotoContent(cityId: any, keyword:string): Observable<PhotoResult> {
+    return this.http.get<PhotoResult>(`${environment.url}/cities/public/${cityId}/city-photos`);
   }
 }
