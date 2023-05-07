@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import environment from '../environment'
+import {environment} from '../../enviroments/environment'
 import { City } from '../models/city.model';
 import { CitiesResult } from '../models/cities.model';
 import { Photo } from '../models/photo.model';
@@ -25,7 +25,15 @@ export class CityService {
 
   }
 
-  getAllPublicContent(): Observable<CitiesResult> {
+  getAllPublicContent(name?: string,currentPage?: number,size?: number): Observable<CitiesResult> {
+    if(name)
+      return this.http.get<CitiesResult>(`${environment.url}/cities/public/${name}`);
+    if(currentPage)
+      return this.http.get<CitiesResult>(`${environment.url}/cities/public?currentPage=${currentPage}`);
+    if(currentPage && name)
+      return this.http.get<CitiesResult>(`${environment.url}/cities/public/${name}?currentPage=${currentPage}`);
+    if(currentPage && name && size)
+      return this.http.get<CitiesResult>(`${environment.url}/cities/public/${name}?currentPage=${currentPage}&name=${name}&size=${size}`);
     return this.http.get<CitiesResult>(`${environment.url}/cities/public`);
 
   }
@@ -48,9 +56,7 @@ export class CityService {
       params: params,
       reportProgress: true,
     };
-    // const req = new HttpRequest('POST', `${environment.url}/city/image/create?objectName=${name}`, formData, options);
     return this.http.post(`${environment.url}/city/image/create?objectName=${name}`, formData, { responseType: 'text' });
-    // return this.http.request(req);
   }
 
   addCity(city: City): Observable<any> {

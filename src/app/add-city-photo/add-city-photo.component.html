@@ -9,61 +9,76 @@
 
   <div>
 
-    <ng-autocomplete
-    style="padding: 16px"
-      [data]="data"
-      [searchKeyword]="keyword"
-      placeholder="Select country"
-      (selected)='selectEvent($event)'
-      (inputChanged)='onChangeSearch($event)'
-      (inputFocused)="onFocused($event)"
-      [itemTemplate]="itemTemplate"
-      [notFoundTemplate]="notFoundTemplate">
+   <div *ngIf="photo">
+      <ng-autocomplete
+        style="padding: 16px"
+        [data]="data"
+        [searchKeyword]="keyword"
+        placeholder="Select country"
+        (selected)='selectEvent($event)'
+        (inputChanged)='onChangeSearch($event)'
+        (inputFocused)="onFocused($event)"
+        [itemTemplate]="itemTemplate"
+        [notFoundTemplate]="notFoundTemplate">
     </ng-autocomplete>
       <ng-template #itemTemplate let-item>
       <a [innerHTML]="item.name" style="color: rgb(0, 0, 0);"></a>
-      </ng-template>
+    </ng-template>
 
-      <ng-template #notFoundTemplate let-notFound>
-      <div [innerHTML]="notFound"></div>
-  </ng-template>
+    <ng-template #notFoundTemplate let-notFound>
+    <div [innerHTML]="notFound"></div>
+</ng-template>
+   </div>
 
 </div>
 
-    <div *ngFor = "let photo of photo; let indexOfelement=index;">
+<div class="row">
 
-      <div class="row">
-        <input id="photoName" type="text" class="col-10 form-control" [(ngModel)]="photo.photoName" name="photoName"  aria-describedby="inputGroup-sizing-sm">
-        <div class="col-2">
-          <div class="row">
-            <i class="col-6 bi bi-trash3-fill nav-link" (click)="delete($event)" id={{indexOfelement}}></i>
-            <i class="col-6 bi bi-check2 nav-link" (click)="save($event)" id={{indexOfelement}}></i>
-           </div>
+      <div *ngFor = "let photo of photo; let indexOfelement=index;">
+
+        <div class="row">
+
+          <input id="photoName" type="text" class="col-10 form-control" [(ngModel)]="photo.photoName" name="photoName"  aria-describedby="inputGroup-sizing-sm">
+          <div class="col-2">
+            <div class="row">
+              <i class="col-6 bi bi-trash3-fill nav-link" (click)="delete($event)" id={{indexOfelement}}></i>
+              <i class="col-6 bi bi-check2 nav-link" (click)="save($event)" id={{indexOfelement}}></i>
+            </div>
+          </div>
         </div>
+
+        <div class="row">
+
+          <img src={{photo.photoUrl}}  class="rounded float-left" style="width: 200px;height: 200px;margin: 16px;"/>
+
       </div>
 
-      <div class="row">
+      </div>
 
-         <img src={{photo.photoUrl}}  class="rounded float-left" style="width: 200px;height: 200px;margin: 16px;"/>
+      <nav aria-label="More" class="row"  style="padding-left: 100px;" *ngIf="cityPhotosResult">
+        <ul class="pagination">
+          <li class="page-item" >
+            <button class="page-link"  (click) = "prev()" *ngIf="cityPhotosResult.size">Prev</button>
+          </li>
+          <li class="page-item" >
+            <button class="page-link"  (click) = "next()"  *ngIf="cityPhotosResult.size">next</button>
+          </li>
+        </ul>
+      </nav>
 
-    </div>
-
-    </div>
+</div>
 
     <div class="row text-center text-lg-start">
 
-      <div *ngFor="let city of cityPhotosResult?.content" class="col-4">
+      <div *ngFor="let city of cityPhotosResult?.content; let indexOfelementPhoto=index;" class="col-4">
         <div class="row " >
-          <img class="img-fluid img-thumbnail"  src={{city.photoUrl}} alt="">
+          <img class="img-fluid img-thumbnail sized"  src={{city.photoUrl}} alt="">
         </div>
         <div class="row mt-1 " >
           <h3>{{city.photoName}}</h3>
-          <i class=" col-3 bi bi-pencil-square"  id={{city.photoName}}></i>
-          <i class=" col-3 bi bi-trash3-fill" (click)="delete($event)" id={{city.photoName}}></i>
+          <i class="col-6 bi bi-trash3-fill" (click)="deletePhoto($event)" id={{indexOfelementPhoto}}></i>
         </div>
-
       </div>
-
     </div>
 
 </div>

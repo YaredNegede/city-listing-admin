@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CitiesResult, Content } from '../models/cities.model';
+import { CitiesResult } from '../models/cities.model';
+import { City } from '../models/city.model';
 import { CityService } from '../_services/cities.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 
@@ -11,11 +12,14 @@ import { TokenStorageService } from '../_services/token-storage.service';
 export class HomeComponent implements OnInit {
 
   keyword = 'name';
-  data: Array<Content> = [];
-
   isLoggedIn = false;
   cities?: CitiesResult;
   cityName: string = ""
+  countryName: string = ""
+
+
+  page: number = 0
+  size: number = 10
 
   constructor(
     private userService: CityService,
@@ -26,7 +30,7 @@ export class HomeComponent implements OnInit {
     this.loadAllCities()
   }
 
-  selectEvent(val: Content) {
+  selectEvent(val: City) {
     this.loadCities(val.name)
   }
 
@@ -38,22 +42,14 @@ export class HomeComponent implements OnInit {
     // do something when input is focused
   }
 
-  //
 
-
-  loadAllCities(){
-    this.userService.getAllPublicContent().subscribe({
+  loadAllCities(name?: string,currentPage?: number,size?: number){
+    this.userService.getAllPublicContent(name,currentPage,size).subscribe({
       next: data => {
         this.cities = data;
-        if(this.cities){
-          this.cities.content.forEach(c=>{
-            this.data.push(c)
-          })
-
-        }
       },
       error: err => {
-        // this.content = JSON.parse(err.error).message;
+        alert("Error")
       }
     });
   }
@@ -61,28 +57,22 @@ export class HomeComponent implements OnInit {
   loadCities(name?:string){
     this.userService.getPublicContent(name).subscribe({
       next: data => {
-        this.cities = data;
-        if(this.cities){
-          this.cities.content.forEach(c=>{
-            this.data.push(c)
-          })
-
-        }
+        this.cities = data
       },
       error: err => {
-        // this.content = JSON.parse(err.error).message;
+        alert("Error")
       }
     });
   }
 
   addCity(): void {
-    this.userService.addCity({name: this.cityName})
+    this.userService.addCity({name: this.cityName,countryName:this.countryName})
     .subscribe({
       next: () => {
         this.loadCities()
       },
       error: err => {
-        // this.content = JSON.parse(err.error).message;
+        alert("Error")
       }
     });
   }
@@ -94,7 +84,7 @@ export class HomeComponent implements OnInit {
         this.loadCities()
       },
       error: err => {
-        // this.content = JSON.parse(err.error).message;
+        alert("Error")
       }
     });
   }
@@ -106,9 +96,22 @@ export class HomeComponent implements OnInit {
         this.loadCities()
       },
       error: err => {
-        // this.content = JSON.parse(err.error).message;
+        alert("Error")
       }
     });
+  }
+
+  next(){
+    if(this.page > -1){
+      this.loadAllCities(undefined,++this.page,this.size)
+    }
+
+  }
+
+  prev(){
+    if(this.page > -1){
+      this.loadAllCities(undefined,--this.page, this.size)
+    }
   }
 
 }

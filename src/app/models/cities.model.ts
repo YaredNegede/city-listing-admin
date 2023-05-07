@@ -1,3 +1,4 @@
+import { City } from './city.model';
 export interface CitiesResult {
   totalPages: number
   totalElements: number
@@ -5,7 +6,7 @@ export interface CitiesResult {
   first: boolean
   last: boolean
   size: number
-  content: Content[]
+  content: City[]
   number: number
   numberOfElements: number
   empty: boolean
@@ -26,7 +27,3 @@ export interface Sort {
   unsorted: boolean
 }
 
-export interface Content {
-  id: number
-  name: string
-}

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import environment from '../environment'
+import {environment} from '../../enviroments/environment'
 
 
 const httpOptions = {
@@ -23,6 +23,7 @@ export class AuthService {
   }
 
   register(firstName: string,lastName: string, email: string, password: string): Observable<any> {
+    console.log(environment)
     return this.http.post(`${environment.url}/auth/register`, {
       firstName,
       lastName,

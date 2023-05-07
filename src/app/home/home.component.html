@@ -1,65 +1,85 @@
-    <div class="container">
+<div>
 
-      <div class="row">
+        <div class="row card"  *ngIf="cities">
 
-        <form  *ngIf="isLoggedIn">
-          <div class="input-group input-group-sm">
-            <input id="cityName" type="text" class="form-control" [(ngModel)]="cityName" name="cityName"  aria-describedby="inputGroup-sizing-sm">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-sm">
-                <i class="bi bi-plus-square" (click)="addCity()"></i>
-              </span>
+            <div class="row" *ngIf="isLoggedIn" style="padding: 16px;">
+              <div  class="form-row">
+                <input  style="margin: 8px" id="cityName" type="text" class="form-control" [(ngModel)]="cityName" name="cityName" placeholder="City name">
+                <input  style="margin: 8px" id="countryName" type="text" class="form-control" [(ngModel)]="countryName" name="countryName" placeholder="Country name">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" (click)="addCity()" type="button">Add</button>
+                </span>
+              </div>
             </div>
+
+             <div class="col-12"  *ngIf="cities.content" style="margin: 16px;">
+
+              <div *ngIf="cities.content">
+                    <ng-autocomplete
+                    [data]="cities.content"
+                    [searchKeyword]="keyword"
+                    placeholder="Select country"
+                    (selected)='selectEvent($event)'
+                    (inputChanged)='onChangeSearch($event)'
+                    (inputFocused)="onFocused($event)"
+                    [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate">
+                      </ng-autocomplete>
+                    <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.name" style="color: rgb(0, 0, 0);"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+              </div>
+
+              <table class="table">
+
+                <tr *ngFor = "let city of cities.content; let indexOfelement=index;">
+                  <td>
+                    {{city.countryName}}
+                  </td>
+                  <td>
+                    {{city.name}}
+                  </td>
+                 <td>
+                    <a href="#" class="col-4 card-link" routerLink="cities/{{city.id}}" *ngIf="isLoggedIn">
+                      <i class="bi bi-pencil-square"  id={{city.id}}></i>
+                    </a>
+                 </td>
+                  <td>
+                    <a href="#" class="col-4 card-link card-title">
+                      <i class="bi bi-trash3-fill" (click)="delete($event)" id={{city.id}}  *ngIf="isLoggedIn"></i>
+                    </a>
+                  </td>
+                </tr>
+
+              </table>
+
+              <div>
+
+                <div *ngIf="cities.empty">
+                  <h3>There is no data</h3>
+                </div>
+
+                <nav aria-label="More" class="row"  style="padding-left: 100px;">
+                  <ul class="pagination">
+                    <li class="page-item" >
+                      <button class="page-link"  (click) = "prev()" *ngIf="cities.first">Prev</button>
+                    </li>
+                    <li class="page-item" >
+                      <button class="page-link"  (click) = "next()"  *ngIf="cities.last">next</button>
+                    </li>
+
+                  </ul>
+                </nav>
+
+              </div>
+
           </div>
-        </form>
 
-        <ng-autocomplete
-          [data]="data"
-          [searchKeyword]="keyword"
-          placeholder="Select country"
-          (selected)='selectEvent($event)'
-          (inputChanged)='onChangeSearch($event)'
-          (inputFocused)="onFocused($event)"
-          [itemTemplate]="itemTemplate"
-          [notFoundTemplate]="notFoundTemplate">
-        </ng-autocomplete>
-          <ng-template #itemTemplate let-item>
-          <a [innerHTML]="item.name" style="color: rgb(0, 0, 0);"></a>
-          </ng-template>
-
-          <ng-template #notFoundTemplate let-notFound>
-          <div [innerHTML]="notFound"></div>
-        </ng-template>
-
-
-     <div class="row ">
-
-
-        <div class="wms-card-size card col-3 white " style="width: 18rem;"  *ngFor="let city of cities?.content" style="margin: 16px;">
-
-          <div class="card-body">
-
-            <a href="#" class="col-4 card-link card-title">
-              <i class="bi bi-trash3-fill nav-link" (click)="delete($event)" id={{city.id}}  *ngIf="isLoggedIn">
-              </i>
-            </a>
-
-            <h6 class="card-subtitle mb-2 text-muted">{{city.name}}</h6>
-
-            <p class="card-text">
-              {{city.name}}
-            </p>
-
-            <a href="#" class="col-4 card-link" routerLink="cities/{{city.id}}" *ngIf="isLoggedIn">
-              <i class="bi bi-pencil-square"  id={{city.id}}></i>
-            </a>
-
-          </div>
 
         </div>
-     </div>
-
-
-    </div>
 
 </div>

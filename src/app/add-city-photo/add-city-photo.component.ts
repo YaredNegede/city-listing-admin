@@ -1,7 +1,6 @@
 import { CityService } from './../_services/cities.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { finalize, Subscription } from 'rxjs';
-import environment from '../environment'
+import {environment} from '../../enviroments/environment'
 import { Photo } from '../models/photo.model';
 import { ActivatedRoute } from '@angular/router';
 import { CityPhotoService } from '../_services/cities.photos.service';
@@ -97,6 +96,24 @@ export class AddCityPhotoComponent implements OnInit {
         this.data.push({id:id++,name:c.photoName})
        })
     })
+  }
+
+  deletePhoto(event:any){
+    const target = event.target as HTMLButtonElement;
+    const index = Number.parseInt(target.id)
+    this.cityPhotoService.delete(index)
+    .subscribe(res=>{
+      this.loadCityPhoto()
+    })
+  }
+
+  next(){
+    console.log("next")
+
+  }
+
+  prev(){
+    console.log("prev")
   }
 
 }
