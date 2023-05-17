@@ -37,12 +37,19 @@ export class AddCityPhotoComponent implements OnInit {
   }
 
 
-  selectEvent(val: string) {
-    this.loadOneCityPhoto(val)
+  selectEvent(val: Photo) {
+    console.log(val)
+    this.loadOneCityPhoto(val.photoName)
   }
 
   onChangeSearch(val: string) {
-    this.loadOneCityPhoto(val)
+    console.log(val)
+    if(val) {
+      this.loadOneCityPhoto(val)
+    }
+    else {
+      this.loadCityPhoto()
+    }
   }
 
   onFocused(e: any){
@@ -83,11 +90,12 @@ export class AddCityPhotoComponent implements OnInit {
     if(cityId){
       let id = Number.parseInt(cityId)
       if(cityId){
-        this.cityPhotoService.getPublicCityPhotoContent(id)
+        this.cityPhotoService.getPubliCityPhotoContent(id)
         .subscribe(res=>{
+          this.data = []
           this.cityPhotosResult = res
            this.cityPhotosResult.content.forEach(c=>{
-            this.data.push({id:id++,name:c.photoName})
+            this.data.push({id:id++,photoName:c.photoName})
            })
         })
       }
@@ -100,8 +108,9 @@ export class AddCityPhotoComponent implements OnInit {
     this.cityPhotoService.getPublicOneCityPhotoContent(cityId,keyword)
     .subscribe(res=>{
       this.cityPhotosResult = res
+      this.data = []
        this.cityPhotosResult.content.forEach(c=>{
-        this.data.push({id:id++,name:c.photoName})
+        this.data.push({id:id++,photoName:c.photoName})
        })
     })
   }
@@ -120,11 +129,12 @@ export class AddCityPhotoComponent implements OnInit {
     if(cityId){
       let id = Number.parseInt(cityId)
       if(cityId){
-        this.cityPhotoService.getPublicCityPhotoContent(id, ++this.currentPage,this.size)
+        this.cityPhotoService.getPubliCityPhotoContent(id, ++this.currentPage,this.size)
         .subscribe(res=>{
           this.cityPhotosResult = res
+          this.data = []
            this.cityPhotosResult.content.forEach(c=>{
-            this.data.push({id:id++,name:c.photoName})
+            this.data.push({id:id++,photoName:c.photoName})
            })
         })
       }
@@ -136,11 +146,12 @@ export class AddCityPhotoComponent implements OnInit {
     if(cityId){
       let id = Number.parseInt(cityId)
       if(cityId && this.currentPage>-1){
-        this.cityPhotoService.getPublicCityPhotoContent(id, --this.currentPage,this.size)
+        this.cityPhotoService.getPubliCityPhotoContent(id, --this.currentPage,this.size)
         .subscribe(res=>{
+          this.data = []
           this.cityPhotosResult = res
            this.cityPhotosResult.content.forEach(c=>{
-            this.data.push({id:id++,name:c.photoName})
+            this.data.push({id:id++,photoName:c.photoName})
            })
         })
       }
