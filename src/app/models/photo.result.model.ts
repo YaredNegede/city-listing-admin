@@ -13,6 +13,7 @@ export interface PhotoResult {
 }
 
 export interface Content {
+  id: number
   photoName: string
   photoUrl: string
 }
@@ -25,15 +26,9 @@ export interface Sort {
 
 export interface Pageable {
   offset: number
-  sort: Sort2
+  sort: Sort
   pageNumber: number
   pageSize: number
   paged: boolean
   unpaged: boolean
-}
-
-export interface Sort2 {
-  empty: boolean
-  sorted: boolean
-  unsorted: boolean
 }

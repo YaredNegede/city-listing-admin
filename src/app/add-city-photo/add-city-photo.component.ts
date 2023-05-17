@@ -4,7 +4,6 @@ import {environment} from '../../enviroments/environment'
 import { Photo } from '../models/photo.model';
 import { ActivatedRoute } from '@angular/router';
 import { CityPhotoService } from '../_services/cities.photos.service';
-import { CitiesResult } from '../models/cities.model';
 import { Content, PhotoResult } from '../models/photo.result.model';
 import { TokenStorageService } from '../_services/token-storage.service';
 
@@ -38,10 +37,12 @@ export class AddCityPhotoComponent implements OnInit {
   }
 
 
-  selectEvent(val: Content) {
+  selectEvent(val: string) {
+    this.loadOneCityPhoto(val)
   }
 
   onChangeSearch(val: string) {
+    this.loadOneCityPhoto(val)
   }
 
   onFocused(e: any){
